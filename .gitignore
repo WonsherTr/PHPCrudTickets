@@ -1,0 +1,11 @@
+/vendor/
+/node_modules/
+/.env
+/.env.backup
+/storage/*.key
+/public/hot
+/public/storage
+/public/build/
+*.log
+.phpunit.result.cache
+docker-compose.override.yml
