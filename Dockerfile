@@ -17,11 +17,11 @@ WORKDIR /var/www/html
 # Copy project
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Install PHP dependencies (including dev for seeders/factories)
+RUN composer install --optimize-autoloader --no-interaction
 
 # Install Node & build assets
-RUN npm ci && npm run build
+RUN npm install && npm run build
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
@@ -33,6 +33,10 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 # Supervisor config
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/local/bin/entrypoint.sh"]

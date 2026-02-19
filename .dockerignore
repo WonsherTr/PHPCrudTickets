@@ -1,0 +1,12 @@
+node_modules
+vendor
+.env.*.example
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+.git
+.idea
+.vscode
+*.log
+docker-compose*.yml

@@ -10,10 +10,12 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - .:/var/www/html
       - storage_data:/var/www/html/storage/app/public
+    env_file:
+      - .env
     environment:
       - APP_ENV=production
+      - DB_HOST=db
     depends_on:
       db:
         condition: service_healthy
@@ -29,7 +31,7 @@ services:
       POSTGRES_USER: helpdesk_user
       POSTGRES_PASSWORD: helpdesk_pass
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
